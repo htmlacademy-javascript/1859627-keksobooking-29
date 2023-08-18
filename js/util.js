@@ -7,7 +7,7 @@ const getRandomInteger = (a, b) => {
 
 const getRandomNumber = (min, max) => {
   const number = (Math.random() * (max - min) + min).toFixed(5)
-  return number
+  return Number(number)
 };
 
 const getRandomArrayElement = (elements) => {
