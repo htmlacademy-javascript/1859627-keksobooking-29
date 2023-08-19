@@ -50,8 +50,8 @@ const generateOffer = () => {
     address: getRandomNumber(35.65, 35.7) + ' ' + getRandomNumber(139.7, 139.8),
     price: getRandomInteger(1, 10000),
     type: getRandomArrayElement(TYPE),
-    rooms: getRandomInteger(1, 9),
-    guests: getRandomInteger(1, 15),
+    rooms: getRandomInteger(1, 3),
+    guests: getRandomInteger(1, 3),
     checkin: getRandomArrayElement(CHECKIN),
     checkout: getRandomArrayElement(CHECKOUT),
     features: randomizeArr(FEATURES),
@@ -89,3 +89,4 @@ const generateAds = () => {
 const announcements = generateAds();
 
 export {announcements};
+export {getRandomArrayElement};
