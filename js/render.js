@@ -78,8 +78,9 @@ announcements.forEach(({offer, author}) => {
 
   cardNode.querySelector('.popup__avatar').src = author.avatar;
   arr.push(cardNode);
-
 });
+
+export {arr};
 
 listElement.appendChild(arr[1]);
 

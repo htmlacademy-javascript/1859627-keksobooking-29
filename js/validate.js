@@ -83,5 +83,3 @@ const setCurrentRealtyType = (type) => {
   currentRealtyType = type;
 };
 
-// roomNumberNode = roomNumber
-// capacityNode = capacity
