@@ -1,5 +1,6 @@
 import {disableForm, enableForm} from './form.js';
-import {arr} from './render.js';
+import {renderAnnouncements} from './render.js';
+import {announcements} from './data.js';
 
 const findAddress = document.querySelector('#address');
 
@@ -35,6 +36,12 @@ const mainPinIcon = L.icon({
   iconAnchor: [26, 52],
 });
 
+const secondaryPinIcon = L.icon({
+  iconUrl: './img/pin.svg',
+  iconSize: [52, 52],
+  iconAnchor: [26, 52],
+});
+
 const marker = L.marker(startCoordinate, {
   draggable: true,
   icon: mainPinIcon,
@@ -44,7 +51,8 @@ marker.addTo(map);
 
 marker.on('moveend', (evt) => {
   console.log(evt.target.getLatLng());
-  findAddress.value = evt.target.getLatLng();
+  const {lat, lng} = evt.target.getLatLng();
+  findAddress.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`
 });
 
 resetButton.addEventListener('click', () => {
@@ -52,12 +60,18 @@ resetButton.addEventListener('click', () => {
   map.setView(startCoordinate, ZOOM);
 });
 
-// arr.forEach(({lat, lng}) => {
-//   const marker = L.marker({
-//     lat,
-//     lng,
-//   });
+announcements.forEach((announcement) => {
+  const {lat, lng} = announcement.location;
+  const marker = L.marker(
+    {
+      lat,
+      lng,
+    },
+    {
+      icon: secondaryPinIcon,
+    },
+  );
 
-//   marker.addTo(map);
-// });
+  marker.addTo(map).bindPopup(renderAnnouncements(announcement));
+});
 
