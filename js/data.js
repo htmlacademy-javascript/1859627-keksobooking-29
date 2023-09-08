@@ -89,4 +89,3 @@ const generateAds = () => {
 const announcements = generateAds();
 
 export {announcements};
-export {getRandomArrayElement};

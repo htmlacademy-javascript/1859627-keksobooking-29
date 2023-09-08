@@ -1,6 +1,6 @@
 import {disableForm, enableForm} from './form.js';
 import {renderAnnouncements} from './render.js';
-import {announcements} from './data.js';
+// import {announcements} from './data.js';
 
 const findAddress = document.querySelector('#address');
 

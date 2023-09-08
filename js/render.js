@@ -1,4 +1,4 @@
-import {announcements, getRandomArrayElement} from './data.js'
+import {getRandomArrayElement} from './util.js'
 
 const offerType = {
   flat : 'Квартира',
