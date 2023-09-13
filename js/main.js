@@ -2,6 +2,9 @@ import './render.js';
 import './validate.js';
 import './map.js';
 import './server-data.js';
+import {setUserFormSubmit} from './validate.js';
+
+setUserFormSubmit();
 
 
 

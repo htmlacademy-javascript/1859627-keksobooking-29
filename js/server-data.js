@@ -1,6 +1,18 @@
-import {renderAnnouncements} from './render.js';
-fetch('https://29.javascript.pages.academy/keksobooking/data')
-.then((response) => response.json())
-.then((announcements) => {
-  renderAnnouncements(announcements);
-});
+import {initPins, createMarker} from './map.js';
+import {getData} from './api.js';
+import {showAlert} from './util.js';
+getData()
+  .then((announcements) => {
+    createMarker();
+    initPins(announcements.slice(0, 10));
+  })
+  .catch(
+    (err) => {
+      showAlert(err.message);
+    }
+  );
+
+
+
+
+

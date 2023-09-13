@@ -1,3 +1,6 @@
+import {showAlert} from './util.js';
+import {sendData} from './api.js';
+
 const ROOMS_ERROR_MESSAGE = 'Недопустимое количество комнат для текущего количества гостей';
 const roomNumber = document.querySelector('#room_number');
 const capacity = document.querySelector('#capacity');
@@ -28,16 +31,20 @@ const pristine = new Pristine(form, {
   errorTextClass: 'text-help',
 });
 
-form.addEventListener('submit', (evt) => {
-  evt.preventDefault();
+const setUserFormSubmit = (onSuccess) => {
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
 
-  const isValid = pristine.validate();
-  if (isValid) {
-    console.log('Можно отправлять');
-  } else {
-    console.log('Форма невалидна');
-  }
-});
+    const isValid = pristine.validate();
+    if (isValid) {
+      sendData(new FormData(evt.target))
+        .then(onSuccess)
+        .catch((err) => {
+          showAlert(err.message);
+        });
+    }
+  });
+};
 
 let currentRealtyType = 'flat';
 
@@ -83,3 +90,4 @@ const setCurrentRealtyType = (type) => {
   currentRealtyType = type;
 };
 
+export {setUserFormSubmit};

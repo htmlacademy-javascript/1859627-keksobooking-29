@@ -117,12 +117,14 @@ const renderAnnouncements = (announcement) => {
   const photosFragment = document.createDocumentFragment();
   photosContainer.innerHTML = '';
 
-  photos.forEach((photo) => {
-    const photoNode = photoTemplate.cloneNode(true);
+  if (photos) {
+    photos.forEach((photo) => {
+      const photoNode = photoTemplate.cloneNode(true);
 
-    photoNode.src = photo;
-    photosFragment.appendChild(photoNode);
-  });
+      photoNode.src = photo;
+      photosFragment.appendChild(photoNode);
+    });
+  }
 
   photosContainer.appendChild(photosFragment);
 

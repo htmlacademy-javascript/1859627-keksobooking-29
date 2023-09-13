@@ -42,36 +42,42 @@ const secondaryPinIcon = L.icon({
   iconAnchor: [26, 52],
 });
 
-const marker = L.marker(startCoordinate, {
-  draggable: true,
-  icon: mainPinIcon,
-});
+const createMarker = () => {
+  const marker = L.marker(startCoordinate, {
+    draggable: true,
+    icon: mainPinIcon,
+  });
 
-marker.addTo(map);
+  marker.addTo(map);
 
-marker.on('moveend', (evt) => {
-  console.log(evt.target.getLatLng());
-  const {lat, lng} = evt.target.getLatLng();
-  findAddress.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`
-});
+  marker.on('moveend', (evt) => {
+    console.log(evt.target.getLatLng());
+    const {lat, lng} = evt.target.getLatLng();
+    findAddress.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`
+  });
+}
 
 resetButton.addEventListener('click', () => {
   marker.setLatLng(startCoordinate);
   map.setView(startCoordinate, ZOOM);
 });
 
-announcements.forEach((announcement) => {
-  const {lat, lng} = announcement.location;
-  const marker = L.marker(
-    {
-      lat,
-      lng,
-    },
-    {
-      icon: secondaryPinIcon,
-    },
-  );
+const initPins = (announcements) => {
+  announcements.forEach((announcement) => {
+    const {lat, lng} = announcement.location;
+    const marker = L.marker(
+      {
+        lat,
+        lng,
+      },
+      {
+        icon: secondaryPinIcon,
+      },
+    );
 
-  marker.addTo(map).bindPopup(renderAnnouncements(announcement));
-});
+    marker.addTo(map).bindPopup(renderAnnouncements(announcement));
+  });
+};
+
+export {initPins, createMarker};
 
