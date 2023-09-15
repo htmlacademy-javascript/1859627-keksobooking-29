@@ -1,4 +1,4 @@
-import {showAlert} from './util.js';
+import {showAlert, showSuccess} from './alert.js';
 import {sendData} from './api.js';
 
 const ROOMS_ERROR_MESSAGE = 'Недопустимое количество комнат для текущего количества гостей';
@@ -8,6 +8,14 @@ const form = document.querySelector('.ad-form');
 const typeOfHousing = document.querySelector('#type');
 const timeIn = document.querySelector('#timein');
 const timeOut = document.querySelector('#timeout');
+const formSubmitNode = form.querySelector('.ad-form__submit');
+const priceSliderNode = form.querySelector('.ad-form__slider');
+const priceNode = form.querySelector('#price');
+const filterFormNode = document.querySelector('.map__filters');
+const filterNodes = filterFormNode.querySelectorAll('.map__filter');
+const featureNodes = filterFormNode.querySelector('.map__features').querySelectorAll('input');
+
+let filter = {};
 
 const minPrice = {
   bungalow: 0,
@@ -37,11 +45,18 @@ const setUserFormSubmit = (onSuccess) => {
 
     const isValid = pristine.validate();
     if (isValid) {
+      blockSubmitButton();
       sendData(new FormData(evt.target))
-        .then(onSuccess)
+        .then((onSuccess) => {
+          showSuccess();
+          unblockSubmitButton();
+          form.reset();
+          resetForm();
+        })
         .catch((err) => {
           showAlert(err.message);
-        });
+          unblockSubmitButton();
+        },)
     }
   });
 };
@@ -88,6 +103,39 @@ timeOut.addEventListener('change', (evt) => {
 
 const setCurrentRealtyType = (type) => {
   currentRealtyType = type;
+};
+
+const blockSubmitButton = () => {
+  formSubmitNode.disabled = true;
+  formSubmitNode.textContent = 'Публикуется...';
+};
+
+const unblockSubmitButton = () => {
+  formSubmitNode.disabled = false;
+  formSubmitNode.textContent = 'Опубликовать';
+};
+
+form.addEventListener('reset', () => {
+  resetForm();
+  resetFilters();
+  filter = {};
+});
+
+const resetFilters = () => {
+  filterNodes.forEach((filterNode) => {
+    filterNode.value = 'any';
+  });
+  featureNodes.forEach((featureNode) => {
+    featureNode.checked = false;
+  });
+};
+
+const resetForm = () => {
+  pristine.reset();
+  // priceSliderNode.noUiSlider.set(1000);
+  priceNode.value = '';
+  setCurrentRealtyType('flat');
+  validatePrice();
 };
 
 export {setUserFormSubmit};

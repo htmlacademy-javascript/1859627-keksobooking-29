@@ -1,6 +1,6 @@
 import {initPins, createMarker} from './map.js';
 import {getData} from './api.js';
-import {showAlert} from './util.js';
+import {showAlert} from './alert.js';
 getData()
   .then((announcements) => {
     createMarker();

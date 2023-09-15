@@ -1,5 +1,4 @@
-const GET_URL = 'https://29.javascript.pages.academy/keksobooking/data';
-const SEND_URL = 'https://29.javascript.pages.academy/keksobooking';
+const BASE_URL = 'https://29.javascript.pages.academy/keksobooking';
 const Route = {
   GET_DATA: '/data',
   SEND_DATA: '/',
@@ -9,8 +8,8 @@ const ErrorText = {
   SEND_DATA: 'Не удалось отправить форму. Попробуйте ещё раз',
 };
 
-const getData = () => fetch
-`${GET_URL}${Route.GET_DATA}`
+const getData = () => fetch(
+`${BASE_URL}${Route.GET_DATA}`)
   .then((response) => {
     if (!response.ok) {
       throw new Error();
@@ -22,7 +21,7 @@ const getData = () => fetch
   });
 
 const sendData = (body) => fetch(
-  `${SEND_URL}${Route.SEND_DATA}`,
+  `${BASE_URL}${Route.SEND_DATA}`,
   {
     method: 'POST',
     body,
