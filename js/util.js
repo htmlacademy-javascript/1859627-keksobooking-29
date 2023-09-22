@@ -20,4 +20,14 @@ const randomizeArr = (arr) => {
   return newArr.slice(0, sliceRandomIndex);
 };
 
-export {getRandomInteger, getRandomArrayElement, getRandomNumber, randomizeArr}
+const getFilteredData = (data, filter) => {
+  let filteredData = [...data];
+
+  Object.entries(filter).forEach(([filterType, filterValue]) => {
+    filteredData = filteredData.filter((item) => String(item.offer[filterType]) === String(filterValue) || !filterValue);
+  });
+
+  return filteredData;
+};
+
+export {getRandomInteger, getRandomArrayElement, getRandomNumber, randomizeArr, getFilteredData}

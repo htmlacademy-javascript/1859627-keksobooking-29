@@ -2,6 +2,8 @@ import {disableForm, enableForm} from './form.js';
 import {renderAnnouncements} from './render.js';
 // import {announcements} from './data.js';
 
+let markers = [];
+
 const findAddress = document.querySelector('#address');
 
 disableForm();
@@ -63,6 +65,10 @@ resetButton.addEventListener('click', () => {
 });
 
 const initPins = (announcements) => {
+  markers.forEach((marker) => {
+    marker.removeFrom(map);
+  });
+
   announcements.forEach((announcement) => {
     const {lat, lng} = announcement.location;
     const marker = L.marker(
@@ -76,6 +82,7 @@ const initPins = (announcements) => {
     );
 
     marker.addTo(map).bindPopup(renderAnnouncements(announcement));
+    markers.push(marker);
   });
 };
 

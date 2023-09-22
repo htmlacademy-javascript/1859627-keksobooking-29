@@ -1,3 +1,5 @@
+import {startFilterChangeHandler} from './server-data.js'
+
 const formNode = document.querySelector('.ad-form');
 const formFieldsetNodes = formNode.querySelectorAll('fieldset');
 
@@ -18,7 +20,7 @@ const disableForm = () => {
   });
 };
 
-const enableForm = () => {
+const enableForm = (onChangeFilter) => {
   formNode.classList.remove('.ad-form--disabled');
   formFieldsetNodes.forEach((fieldsetNode) => {
     fieldsetNode.removeAttribute('disabled', '');
@@ -29,6 +31,8 @@ const enableForm = () => {
   mapSelectNodes.forEach((mapNode) => {
     mapNode.removeAttribute('disabled', '');
   });
+
+  startFilterChangeHandler(onChangeFilter);
 };
 
 export {disableForm, enableForm}

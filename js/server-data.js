@@ -1,69 +1,38 @@
 import {initPins, createMarker} from './map.js';
 import {getData} from './api.js';
 import {showAlert} from './alert.js';
+import {getFilteredData} from './util.js';
+
+const DEFAULT_HOUSING_VALUE = 'any';
+const HOUSING_TYPE_PREFIX = 'housing';
 
 const mapFilters = document.querySelector('.map__filters');
-const housingTypeFilter = mapFilters.querySelector('#housing-type');
 
-// let currentHousingType = 'any'
+let filter = {};
 
-// const setCurrentHousingType = (type) => {
-//   currentHousingType = type;
-// };
+// filterFormNode = mapFilters
+
+const startFilterChangeHandler = (onChangeFilter) => {
+  mapFilters.addEventListener('change', (evt) => {
+    const filterValue = evt.target.value === DEFAULT_HOUSING_VALUE ? '' : evt.target.value;
+    const currentFilterType = evt.target.name.replace(`${HOUSING_TYPE_PREFIX}-`, '');
+    filter[currentFilterType] = filterValue;
+    onChangeFilter(filter);
+  });
+};
 
 getData()
   .then((announcements) => {
-
     createMarker();
-    initPins(announcements);
-
-    housingTypeFilter.addEventListener('change', (evt) => {
-      housingTypeFilter.value = evt.target;
-      // setCurrentHousingType(evt.target);
-      const sor = announcements.filter(function (el) {
-        return el.offer.type === (type);
-      });
-      initPins(sor);
-    });
-    //   if (housingTypeFilter.value === 'any') {
-    //     initPins(announcements);
-    //   } if (housingTypeFilter.value === 'flat') {
-    //     const sor = announcements.filter(function (el) {
-    //       return el.offer.type === (type);
-    //     });
-    //     initPins(sor);
-    //   };
-    //   // timeOut.value = evt.target.value;
-    // });
-
-    // housingTypeFilter.onchange = () => {
-    //   if (housingTypeFilter.value === 'flat') {
-    //     const sor = announcements.filter(function (el) {
-    //       return el.offer.type === 'flat';
-    //     });
-    //     initPins(sor);
-    //   };
-    // };
-
-    // housingTypeFilter.onchange = () => {
-    //   if (housingTypeFilter.value === 'bungalow') {
-    //     const sor = announcements.filter(function (el) {
-    //       return el.offer.type === 'bungalow';
-    //     });
-    //     initPins(sor);
-    //   };
-    // };
-
-    //
-    // let i = 0;
-    // while (i < 10) {
-    // console.log(announcements[i].offer.type);
-    // i++;
-    // }
-    // const sor = announcements.filter(announcements[1]offer.type === palace)
+    const handleFilterChange = (filter) => {
+      initPins(announcements, getFilteredData(data, filter));
+    };
+    enableForm(handleFilterChange);
   })
   .catch(
     (err) => {
       showAlert(err.message);
     }
   );
+
+export {startFilterChangeHandler};
