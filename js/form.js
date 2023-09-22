@@ -1,4 +1,4 @@
-import {startFilterChangeHandler} from './server-data.js'
+import {startFilterChangeHandler} from './filter.js'
 
 const formNode = document.querySelector('.ad-form');
 const formFieldsetNodes = formNode.querySelectorAll('fieldset');

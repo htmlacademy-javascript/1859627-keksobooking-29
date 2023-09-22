@@ -1,6 +1,5 @@
 import {disableForm, enableForm} from './form.js';
 import {renderAnnouncements} from './render.js';
-// import {announcements} from './data.js';
 
 let markers = [];
 
@@ -24,7 +23,6 @@ const resetButton = document.querySelector('.ad-form__reset');
 const map = L.map('map-canvas')
   .on('load', () => {
   console.log('Карта загружена');
-  enableForm();
   })
   .setView(cityCenter, ZOOM);
 
