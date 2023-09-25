@@ -85,4 +85,3 @@ const initPins = (announcements) => {
 };
 
 export {initPins, createMarker};
-
