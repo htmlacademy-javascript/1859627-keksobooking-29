@@ -10,6 +10,8 @@ disableForm();
 const TILE_LAYER = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 const COPYRIGHT = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 const ZOOM = 10;
+const SLICE = 10;
+
 const cityCenter = {
   lat: 35.6895,
   lng: 139.6917,
@@ -49,6 +51,9 @@ const createMarker = () => {
 
   mainMarker.addTo(map);
 
+  const latLng = mainMarker.getLatLng();
+  findAddress.value = `${latLng.lat.toFixed(5)}, ${latLng.lng.toFixed(5)}`;
+
   mainMarker.on('moveend', (evt) => {
     const {lat, lng} = evt.target.getLatLng();
     findAddress.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
@@ -65,7 +70,7 @@ const initPins = (announcements) => {
     marker.removeFrom(map);
   });
 
-  announcements.slice(0, 10).forEach((announcement) => {
+  announcements.slice(0, SLICE).forEach((announcement) => {
     const {lat, lng} = announcement.location;
     const marker = L.marker(
       {

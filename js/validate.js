@@ -2,6 +2,8 @@ import {showAlert, showSuccess} from './alert.js';
 import {sendData} from './api.js';
 
 const ROOMS_ERROR_MESSAGE = 'Недопустимое количество комнат для текущего количества гостей';
+const DEFAULT_HOUSING_TYPE = 'flat';
+const DEFAULT_FILTER_VALUE = 'any';
 const roomNumber = document.querySelector('#room_number');
 const capacity = document.querySelector('#capacity');
 const form = document.querySelector('.ad-form');
@@ -9,13 +11,10 @@ const typeOfHousing = document.querySelector('#type');
 const timeIn = document.querySelector('#timein');
 const timeOut = document.querySelector('#timeout');
 const formSubmitNode = form.querySelector('.ad-form__submit');
-const priceNode = form.querySelector('#price');
 const filterFormNode = document.querySelector('.map__filters');
 const filterNodes = filterFormNode.querySelectorAll('.map__filter');
 const featureNodes = filterFormNode.querySelector('.map__features').querySelectorAll('input');
 const pricePerNight = document.querySelector('#price');
-
-let filter = {};
 
 const minPrice = {
   bungalow: 0,
@@ -49,7 +48,7 @@ const unblockSubmitButton = () => {
   formSubmitNode.textContent = 'Опубликовать';
 };
 
-let currentRealtyType = 'flat';
+let currentRealtyType = DEFAULT_HOUSING_TYPE;
 
 const validatePrice = () => {
   pricePerNight.placeholder = minPrice[currentRealtyType];
@@ -64,8 +63,8 @@ const setCurrentRealtyType = (type) => {
 
 const resetForm = () => {
   pristine.reset();
-  priceNode.value = '';
-  setCurrentRealtyType('flat');
+  pricePerNight.value = '';
+  setCurrentRealtyType(DEFAULT_HOUSING_TYPE);
   validatePrice();
 };
 
@@ -122,7 +121,7 @@ timeOut.addEventListener('change', (evt) => {
 
 const resetFilters = () => {
   filterNodes.forEach((filterNode) => {
-    filterNode.value = 'any';
+    filterNode.value = DEFAULT_FILTER_VALUE;
   });
   featureNodes.forEach((featureNode) => {
     featureNode.checked = false;
@@ -132,7 +131,6 @@ const resetFilters = () => {
 form.addEventListener('reset', () => {
   resetForm();
   resetFilters();
-  filter = {};
 });
 
 export {setUserFormSubmit};

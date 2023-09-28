@@ -54,4 +54,12 @@ const getFilteredData = (data, filter) => {
   return filteredData;
 };
 
-export {getRandomInteger, getRandomArrayElement, getRandomNumber, randomizeArr, getFilteredData};
+const debounce = (callback, timeoutDelay) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
+export {getRandomInteger, getRandomArrayElement, getRandomNumber, randomizeArr, getFilteredData, debounce};
