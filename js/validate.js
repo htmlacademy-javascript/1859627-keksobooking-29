@@ -9,11 +9,11 @@ const typeOfHousing = document.querySelector('#type');
 const timeIn = document.querySelector('#timein');
 const timeOut = document.querySelector('#timeout');
 const formSubmitNode = form.querySelector('.ad-form__submit');
-const priceSliderNode = form.querySelector('.ad-form__slider');
 const priceNode = form.querySelector('#price');
 const filterFormNode = document.querySelector('.map__filters');
 const filterNodes = filterFormNode.querySelectorAll('.map__filter');
 const featureNodes = filterFormNode.querySelector('.map__features').querySelectorAll('input');
+const pricePerNight = document.querySelector('#price');
 
 let filter = {};
 
@@ -39,7 +39,37 @@ const pristine = new Pristine(form, {
   errorTextClass: 'text-help',
 });
 
-const setUserFormSubmit = (onSuccess) => {
+const blockSubmitButton = () => {
+  formSubmitNode.disabled = true;
+  formSubmitNode.textContent = 'Публикуется...';
+};
+
+const unblockSubmitButton = () => {
+  formSubmitNode.disabled = false;
+  formSubmitNode.textContent = 'Опубликовать';
+};
+
+let currentRealtyType = 'flat';
+
+const validatePrice = () => {
+  pricePerNight.placeholder = minPrice[currentRealtyType];
+  if (pricePerNight.value) {
+    pristine.validate(pricePerNight);
+  }
+};
+
+const setCurrentRealtyType = (type) => {
+  currentRealtyType = type;
+};
+
+const resetForm = () => {
+  pristine.reset();
+  priceNode.value = '';
+  setCurrentRealtyType('flat');
+  validatePrice();
+};
+
+const setUserFormSubmit = () => {
   form.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
@@ -47,7 +77,7 @@ const setUserFormSubmit = (onSuccess) => {
     if (isValid) {
       blockSubmitButton();
       sendData(new FormData(evt.target))
-        .then((onSuccess) => {
+        .then(() => {
           showSuccess();
           unblockSubmitButton();
           form.reset();
@@ -56,15 +86,12 @@ const setUserFormSubmit = (onSuccess) => {
         .catch((err) => {
           showAlert(err.message);
           unblockSubmitButton();
-        },)
+        },);
     }
   });
 };
 
-let currentRealtyType = 'flat';
-
 const getMinPriceMessage = () => `Минимальная цена ${minPrice[currentRealtyType]}`;
-const pricePerNight = document.querySelector('#price');
 const validateMinPrice = (value) => minPrice[currentRealtyType] <= value;
 const validateRooms = () => roomNumberOption[Number(roomNumber.value)].includes(Number(capacity.value));
 
@@ -72,22 +99,14 @@ pristine.addValidator(capacity, validateRooms, ROOMS_ERROR_MESSAGE);
 pristine.addValidator(roomNumber, validateRooms, ROOMS_ERROR_MESSAGE);
 pristine.addValidator(pricePerNight, validateMinPrice, getMinPriceMessage);
 
-const validatePrice = () => {
-  // onPriceValidate();
-  pricePerNight.placeholder = minPrice[currentRealtyType];
-  if (pricePerNight.value) {
-    pristine.validate(pricePerNight);
-  }
-};
-
 typeOfHousing.addEventListener('change', (evt) => {
   pricePerNight.min = evt.target.value;
   setCurrentRealtyType(evt.target.value);
   validatePrice();
 });
 
-const onRoomsFieldChange = (evt) => {
-  pristine.validate([roomNumber, capacity])
+const onRoomsFieldChange = () => {
+  pristine.validate([roomNumber, capacity]);
 };
 
 roomNumber.addEventListener('change', onRoomsFieldChange);
@@ -101,26 +120,6 @@ timeOut.addEventListener('change', (evt) => {
   timeIn.value = evt.target.value;
 });
 
-const setCurrentRealtyType = (type) => {
-  currentRealtyType = type;
-};
-
-const blockSubmitButton = () => {
-  formSubmitNode.disabled = true;
-  formSubmitNode.textContent = 'Публикуется...';
-};
-
-const unblockSubmitButton = () => {
-  formSubmitNode.disabled = false;
-  formSubmitNode.textContent = 'Опубликовать';
-};
-
-form.addEventListener('reset', () => {
-  resetForm();
-  resetFilters();
-  filter = {};
-});
-
 const resetFilters = () => {
   filterNodes.forEach((filterNode) => {
     filterNode.value = 'any';
@@ -130,12 +129,10 @@ const resetFilters = () => {
   });
 };
 
-const resetForm = () => {
-  pristine.reset();
-  // priceSliderNode.noUiSlider.set(1000);
-  priceNode.value = '';
-  setCurrentRealtyType('flat');
-  validatePrice();
-};
+form.addEventListener('reset', () => {
+  resetForm();
+  resetFilters();
+  filter = {};
+});
 
 export {setUserFormSubmit};

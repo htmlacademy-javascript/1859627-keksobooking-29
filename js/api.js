@@ -9,7 +9,7 @@ const ErrorText = {
 };
 
 const getData = () => fetch(
-`${BASE_URL}${Route.GET_DATA}`)
+  `${BASE_URL}${Route.GET_DATA}`)
   .then((response) => {
     if (!response.ok) {
       throw new Error();

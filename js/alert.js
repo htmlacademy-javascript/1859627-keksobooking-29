@@ -26,12 +26,12 @@ const showAlert = (message) => {
 
 const hideSuccess = () => {
   successNode.remove();
-  document.removeEventListener('keydown', onEscKeyDown);
+  document.removeEventListener('keydown');
 };
 
 const hideError = () => {
   errorNode.remove();
-  document.removeEventListener('keydown', onEscKeyDown);
+  document.removeEventListener('keydown');
 };
 
 const onEscKeyDown = (evt) => {

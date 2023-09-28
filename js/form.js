@@ -1,4 +1,4 @@
-import {startFilterChangeHandler} from './filter.js'
+import {startFilterChangeHandler} from './filter.js';
 
 const formNode = document.querySelector('.ad-form');
 const formFieldsetNodes = formNode.querySelectorAll('fieldset');
@@ -15,8 +15,8 @@ const disableForm = () => {
 
   mapNode.classList.add('.ad-form--disabled');
   mapFieldsetNodes.setAttribute('disabled', '');
-  mapSelectNodes.forEach((mapNode) => {
-    mapNode.setAttribute('disabled', '');
+  mapSelectNodes.forEach((map) => {
+    map.setAttribute('disabled', '');
   });
 };
 
@@ -28,11 +28,11 @@ const enableForm = (onChangeFilter) => {
 
   mapNode.classList.remove('.ad-form--disabled');
   mapFieldsetNodes.removeAttribute('disabled', '');
-  mapSelectNodes.forEach((mapNode) => {
-    mapNode.removeAttribute('disabled', '');
+  mapSelectNodes.forEach((map) => {
+    map.removeAttribute('disabled', '');
   });
 
   startFilterChangeHandler(onChangeFilter);
 };
 
-export {disableForm, enableForm}
+export {disableForm, enableForm};

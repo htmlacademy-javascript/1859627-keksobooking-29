@@ -6,13 +6,11 @@ const getRandomInteger = (a, b) => {
 };
 
 const getRandomNumber = (min, max) => {
-  const number = (Math.random() * (max - min) + min).toFixed(5)
-  return Number(number)
+  const number = (Math.random() * (max - min) + min).toFixed(5);
+  return Number(number);
 };
 
-const getRandomArrayElement = (elements) => {
-  return elements[getRandomInteger(0, elements.length - 1)]
-};
+const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
 const randomizeArr = (arr) => {
   const newArr = arr.slice(0);
@@ -49,11 +47,11 @@ const getFilteredData = (data, filter) => {
     } else if (filterType.includes(LIST_FILTER_TYPE)) {
       filteredData = filteredData.filter((item) => item.offer[LIST_FILTER_TYPE] && item.offer[LIST_FILTER_TYPE].includes(filterValue) || !filterValue);
     } else {
-    filteredData = filteredData.filter((item) => String(item.offer[filterType]) === String(filterValue) || !filterValue);
+      filteredData = filteredData.filter((item) => String(item.offer[filterType]) === String(filterValue) || !filterValue);
     }
   });
 
   return filteredData;
 };
 
-export {getRandomInteger, getRandomArrayElement, getRandomNumber, randomizeArr, getFilteredData}
+export {getRandomInteger, getRandomArrayElement, getRandomNumber, randomizeArr, getFilteredData};

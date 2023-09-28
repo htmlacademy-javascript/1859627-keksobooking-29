@@ -1,7 +1,8 @@
-import {disableForm, enableForm} from './form.js';
+import {disableForm} from './form.js';
 import {renderAnnouncements} from './render.js';
 
-let markers = [];
+const markers = [];
+let mainMarker = null;
 
 const findAddress = document.querySelector('#address');
 
@@ -21,9 +22,7 @@ const startCoordinate = {
 const resetButton = document.querySelector('.ad-form__reset');
 
 const map = L.map('map-canvas')
-  .on('load', () => {
-  console.log('Карта загружена');
-  })
+  .on('load', () => {})
   .setView(cityCenter, ZOOM);
 
 L.tileLayer(TILE_LAYER, {
@@ -43,22 +42,21 @@ const secondaryPinIcon = L.icon({
 });
 
 const createMarker = () => {
-  const marker = L.marker(startCoordinate, {
+  mainMarker = L.marker(startCoordinate, {
     draggable: true,
     icon: mainPinIcon,
   });
 
-  marker.addTo(map);
+  mainMarker.addTo(map);
 
-  marker.on('moveend', (evt) => {
-    console.log(evt.target.getLatLng());
+  mainMarker.on('moveend', (evt) => {
     const {lat, lng} = evt.target.getLatLng();
-    findAddress.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`
+    findAddress.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
   });
-}
+};
 
 resetButton.addEventListener('click', () => {
-  marker.setLatLng(startCoordinate);
+  mainMarker.setLatLng(startCoordinate);
   map.setView(startCoordinate, ZOOM);
 });
 
@@ -67,7 +65,7 @@ const initPins = (announcements) => {
     marker.removeFrom(map);
   });
 
-  announcements.forEach((announcement) => {
+  announcements.slice(0, 10).forEach((announcement) => {
     const {lat, lng} = announcement.location;
     const marker = L.marker(
       {
