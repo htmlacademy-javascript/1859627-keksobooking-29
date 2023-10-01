@@ -24,47 +24,36 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-const onEscKeyDown = (evt) => {
+const hideSuccess = () => {
+  successNode.remove();
+  document.removeEventListener('keydown', onEscKeyDown);
+};
+
+const hideError = () => {
+  errorNode.remove();
+  document.removeEventListener('keydown', onEscKeyDown);
+};
+
+function onEscKeyDown (evt) {
   if (evt.key === 'Escape') {
-
-    const hideSuccess = () => {
-      successNode.remove();
-      document.removeEventListener('keydown', onEscKeyDown);
-    };
-
-    const hideError = () => {
-      errorNode.remove();
-      document.removeEventListener('keydown', onEscKeyDown);
-    };
-
     hideSuccess();
     hideError();
   }
 };
 
-const hideSuccesses = () => {
-  successNode.remove();
-  document.removeEventListener('keydown', onEscKeyDown);
-};
-
-const hideErrors = () => {
-  errorNode.remove();
-  document.removeEventListener('keydown', onEscKeyDown);
-};
-
 const onSuccessNodeClick = (evt) => {
   if (!evt.target.closest('.success__message')) {
-    hideSuccesses();
+    hideSuccess();
   }
 };
 
 const onErrorButtonNodeClick = () => {
-  hideErrors();
+  hideError();
 };
 
 const onErrorNodeClick = (evt) => {
   if (!evt.target.closest('.error__message')) {
-    hideErrors();
+    hideError();
   }
 };
 
