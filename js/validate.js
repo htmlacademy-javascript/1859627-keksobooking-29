@@ -1,4 +1,4 @@
-import {showAlert, showSuccess} from './alert.js';
+import {showError, showSuccess} from './alert.js';
 import {sendData} from './api.js';
 import {map} from './map.js';
 
@@ -84,8 +84,8 @@ const setUserFormSubmit = () => {
           form.reset();
           resetForm();
         })
-        .catch((err) => {
-          showAlert(err.message);
+        .catch(() => {
+          showError();
           unblockSubmitButton();
         },);
     }
