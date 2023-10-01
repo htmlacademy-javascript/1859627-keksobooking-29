@@ -1,3 +1,10 @@
+const RANGE_FILTER_TYPE = 'price';
+const LIST_FILTER_TYPE = 'features';
+const Price = {
+  LOW: 10000,
+  HIGH: 50000,
+};
+
 const getRandomInteger = (a, b) => {
   const lower = Math.ceil(Math.min(a, b));
   const upper = Math.floor(Math.max(a, b));
@@ -16,13 +23,6 @@ const randomizeArr = (arr) => {
   const newArr = arr.slice(0);
   const sliceRandomIndex = getRandomInteger(1, newArr.length);
   return newArr.slice(0, sliceRandomIndex);
-};
-
-const RANGE_FILTER_TYPE = 'price';
-const LIST_FILTER_TYPE = 'features';
-const Price = {
-  LOW: 10000,
-  HIGH: 50000,
 };
 
 const getFilteredData = (data, filter) => {

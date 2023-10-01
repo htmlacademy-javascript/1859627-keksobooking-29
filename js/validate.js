@@ -1,5 +1,6 @@
-import {showAlert, showSuccess} from './alert.js';
+import {showError, showSuccess} from './alert.js';
 import {sendData} from './api.js';
+import {map} from './map.js';
 
 const ROOMS_ERROR_MESSAGE = 'Недопустимое количество комнат для текущего количества гостей';
 const DEFAULT_HOUSING_TYPE = 'flat';
@@ -66,6 +67,7 @@ const resetForm = () => {
   pricePerNight.value = '';
   setCurrentRealtyType(DEFAULT_HOUSING_TYPE);
   validatePrice();
+  map.closePopup();
 };
 
 const setUserFormSubmit = () => {
@@ -82,8 +84,8 @@ const setUserFormSubmit = () => {
           form.reset();
           resetForm();
         })
-        .catch((err) => {
-          showAlert(err.message);
+        .catch(() => {
+          showError();
           unblockSubmitButton();
         },);
     }

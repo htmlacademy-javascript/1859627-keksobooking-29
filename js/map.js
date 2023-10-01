@@ -6,11 +6,12 @@ let mainMarker = null;
 
 const findAddress = document.querySelector('#address');
 
-disableForm();
 const TILE_LAYER = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 const COPYRIGHT = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 const ZOOM = 10;
 const SLICE = 10;
+
+disableForm();
 
 const cityCenter = {
   lat: 35.6895,
@@ -39,7 +40,7 @@ const mainPinIcon = L.icon({
 
 const secondaryPinIcon = L.icon({
   iconUrl: './img/pin.svg',
-  iconSize: [52, 52],
+  iconSize: [40, 40],
   iconAnchor: [26, 52],
 });
 
@@ -63,6 +64,7 @@ const createMarker = () => {
 resetButton.addEventListener('click', () => {
   mainMarker.setLatLng(startCoordinate);
   map.setView(startCoordinate, ZOOM);
+  map.closePopup();
 });
 
 const initPins = (announcements) => {
@@ -87,4 +89,4 @@ const initPins = (announcements) => {
   });
 };
 
-export {initPins, createMarker};
+export {initPins, createMarker, map};
