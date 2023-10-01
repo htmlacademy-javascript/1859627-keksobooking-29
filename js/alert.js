@@ -39,7 +39,7 @@ function onEscKeyDown (evt) {
     hideSuccess();
     hideError();
   }
-};
+}
 
 const onSuccessNodeClick = (evt) => {
   if (!evt.target.closest('.success__message')) {
