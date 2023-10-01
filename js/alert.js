@@ -36,17 +36,6 @@ const hideError = () => {
 
 function onEscKeyDown (evt) {
   if (evt.key === 'Escape') {
-
-    const hideSuccess = () => {
-      successNode.remove();
-      document.removeEventListener('keydown', onEscKeyDown);
-    };
-
-    const hideError = () => {
-      errorNode.remove();
-      document.removeEventListener('keydown', onEscKeyDown);
-    };
-
     hideSuccess();
     hideError();
   }
